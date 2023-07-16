@@ -38,3 +38,5 @@ export const assertDatabaseConnectionOk = async () => {
         process.exit(1);
     }
 };
+
+module.exports.models = sequelize.models;

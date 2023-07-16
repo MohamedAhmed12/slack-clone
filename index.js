@@ -4,8 +4,7 @@ import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import path from "path";
 
-
-import { assertDatabaseConnectionOk } from "./models";
+import { assertDatabaseConnectionOk, models } from "./models";
 
 const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './schema')));
@@ -13,6 +12,7 @@ const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './schema')));
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection: true
 });
 
 const startServer = async () => {
@@ -21,7 +21,12 @@ const startServer = async () => {
     //  1. creates an Express app
     //  2. installs your ApolloServer instance as middleware
     //  3. prepares your app to handle incoming requests
-    const { url } = await startStandaloneServer(server, { listen: { port: 8080 } });
+    const { url } = await startStandaloneServer(server, { 
+        listen: { port: 8080 },
+        context: async () => ({
+            models
+        })
+     });
 
     console.log(`🚀 Server listening at: ${url}`);
 };
