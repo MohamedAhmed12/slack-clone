@@ -1,8 +1,14 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { typeDefs } from "./schema";
-import { resolvers } from "./resolver";
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import path from "path";
+
+
 import { assertDatabaseConnectionOk } from "./models";
+
+const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
+const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './schema')));
 
 const server = new ApolloServer({
     typeDefs,

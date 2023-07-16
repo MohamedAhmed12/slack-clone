@@ -5,6 +5,10 @@ const applyExtraSetup = (sequelize) => {
     Channel.belongsTo(Team, {
         foreignKey: "channel_id",
     });
+    Channel.belongsToMany(User, {
+        through: "channel_member",
+        foreignKey: "channel_id"
+    });
 
     //Message
     Message.belongsTo(Channel, {
@@ -27,6 +31,10 @@ const applyExtraSetup = (sequelize) => {
     User.belongsToMany(Team, {
         through: "member",
         foreignKey: "user_id",
+    });
+    User.belongsToMany(Channel, {
+        through: "channel_member",
+        foreignKey: "user_id"
     });
 };
 
