@@ -1,5 +1,6 @@
-import React from "react";
-import { Button, Container, Header, Input } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Header, Input, Message } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
 import { useInput } from "../components/partials/hooks/useInput";
 import { useMutation } from "@apollo/client";
 
@@ -9,20 +10,32 @@ const Register = () => {
     const { value: username, bind: bindUsername } = useInput("");
     const { value: email, bind: bindEmail } = useInput("");
     const { value: password, bind: bindPassword } = useInput("");
+    const [errors, setError] = useState({});
 
     // eslint-disable-next-line
     const [register, { data, loading, error }] = useMutation(REGISTER_USER_MUTATION);
     const onSubmit = async () => {
-        const res = await register({
+        await register({
             variables: {
                 username,
                 email,
                 password,
             },
         });
-
-        console.log(res);
     };
+
+    useEffect(() => {
+        if (data) {
+            const { ok, errors } = data.register;
+
+            if (ok) {
+                const navigate = useNavigate();
+                navigate.push("/");
+            } else {
+                setError(errors);
+            }
+        }
+    }, [data]);
 
     return (
         <Container text textAlign="center">
@@ -31,6 +44,9 @@ const Register = () => {
             <Input placeholder="Email" {...bindEmail} fluid />
             <Input type="password" placeholder="Password" {...bindPassword} fluid />
             <Button onClick={onSubmit}>Submit</Button>
+            {errors.length && (
+                <Message error header="Registeration Failed!" list={errors.map((e) => e.message)} />
+            )}
         </Container>
     );
 };
