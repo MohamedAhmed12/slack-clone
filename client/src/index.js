@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import "semantic-ui-css/semantic.min.css";
 
 import Routes from "./routes";
 
