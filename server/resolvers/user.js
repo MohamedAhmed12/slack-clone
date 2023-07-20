@@ -10,22 +10,9 @@ export default {
     },
     Mutation: {
         login: async(parent, {email, password}, {models: {User}, SECRET}) => await tryLogin(email, password, User, SECRET),
-        register: async (parent, { password, ...otherArgs }, { models: { User } }) => {
+        register: async (parent, args, { models: { User } }) => {
             try {
-                if (password.length < 5 || password.length > 100) {
-                    return {
-                        ok: false,
-                        errors: [
-                            {
-                                path: "password",
-                                message: "Password need to be between 8 and 100 characters long",
-                            },
-                        ],
-                    };
-                }
-
-                const hashedPassword = await hash(password, 12);
-                const user = await User.create({ ...otherArgs, password: hashedPassword });
+                const user = await User.create(args);
 
                 return {
                     ok: true,
