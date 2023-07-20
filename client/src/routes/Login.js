@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Header, Input, Message } from "semantic-ui-react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useInput } from "../components/partials/hooks/useInput";
 import { useMutation } from "@apollo/client";
 
@@ -30,8 +30,8 @@ const Login = () => {
                 setError({});
                 localStorage.setItem("token", token);
                 localStorage.setItem("refreshToken", refreshToken);
-                // const navigate = useNavigate();
-                // navigate.push("/");
+                const navigate = useNavigate();
+                navigate.push("/");
             } else {
                 setError(errors);
             }

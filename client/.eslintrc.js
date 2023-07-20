@@ -21,7 +21,7 @@ module.exports = {
             }
         }
     ],
-    "parser": "bable-eslint",
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
