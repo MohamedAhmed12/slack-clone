@@ -11,7 +11,8 @@ const Register = () => {
     const { value: email, bind: bindEmail } = useInput("");
     const { value: password, bind: bindPassword } = useInput("");
     const [errors, setError] = useState({});
-
+    const navigate = useNavigate();
+    
     // eslint-disable-next-line
     const [register, { data, loading, error }] = useMutation(REGISTER_USER_MUTATION);
     const onSubmit = async () => {
@@ -30,8 +31,7 @@ const Register = () => {
 
             if (ok) {
                 setError({});
-                const navigate = useNavigate();
-                navigate.push("/");
+                navigate("/");
             } else {
                 setError(errors);
             }

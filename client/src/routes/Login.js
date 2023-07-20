@@ -10,7 +10,8 @@ const Login = () => {
     const { value: email, bind: bindEmail } = useInput("");
     const { value: password, bind: bindPassword } = useInput("");
     const [errors, setError] = useState({});
-
+    const navigate = useNavigate();
+    
     // eslint-disable-next-line
     const [login, { data, loading, error }] = useMutation(LOGIN_USER_MUTATION);
     const onSubmit = async () => {
@@ -30,8 +31,7 @@ const Login = () => {
                 setError({});
                 localStorage.setItem("token", token);
                 localStorage.setItem("refreshToken", refreshToken);
-                const navigate = useNavigate();
-                navigate.push("/");
+                navigate("/");
             } else {
                 setError(errors);
             }
