@@ -6,6 +6,8 @@ import path from "path";
 
 import { assertDatabaseConnectionOk, models } from "./models";
 
+const SECRET = 's65f4as68fa4sdf65as36f1dfaesf';
+
 const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './schema')));
 
@@ -24,7 +26,8 @@ const startServer = async () => {
     const { url } = await startStandaloneServer(server, { 
         listen: { port: 8080 },
         context: async () => ({
-            models
+            models,
+            SECRET
         })
      });
 

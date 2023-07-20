@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Header, Input, Message } from "semantic-ui-react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useInput } from "../components/partials/hooks/useInput";
 import { useMutation } from "@apollo/client";
 
-import REGISTER_USER_MUTATION from "../graphql/users/mutations/REGISTER_USER";
+import LOGIN_USER_MUTATION from "../graphql/users/mutations/LOGIN_USER";
 
-const Register = () => {
-    const { value: username, bind: bindUsername } = useInput("");
+const Login = () => {
     const { value: email, bind: bindEmail } = useInput("");
     const { value: password, bind: bindPassword } = useInput("");
     const [errors, setError] = useState({});
 
     // eslint-disable-next-line
-    const [register, { data, loading, error }] = useMutation(REGISTER_USER_MUTATION);
+    const [login, { data, loading, error }] = useMutation(LOGIN_USER_MUTATION);
     const onSubmit = async () => {
-        await register({
+        await login({
             variables: {
-                username,
                 email,
                 password,
             },
@@ -26,12 +24,14 @@ const Register = () => {
 
     useEffect(() => {
         if (data) {
-            const { ok, errors } = data.register;
+            const { ok, errors, token, refreshToken } = data.login;
 
             if (ok) {
                 setError({});
-                const navigate = useNavigate();
-                navigate.push("/");
+                localStorage.setItem("token", token);
+                localStorage.setItem("refreshToken", refreshToken);
+                // const navigate = useNavigate();
+                // navigate.push("/");
             } else {
                 setError(errors);
             }
@@ -40,8 +40,7 @@ const Register = () => {
 
     return (
         <Container text textAlign="center">
-            <Header as="h2">Register</Header>
-            <Input placeholder="Username" {...bindUsername} fluid />
+            <Header as="h2">Login</Header>
             <Input placeholder="Email" {...bindEmail} fluid />
             <Input type="password" placeholder="Password" {...bindPassword} fluid />
             <Button onClick={onSubmit}>Submit</Button>
@@ -52,4 +51,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;
