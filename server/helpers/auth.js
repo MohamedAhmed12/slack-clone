@@ -2,7 +2,7 @@ import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import _ from "lodash";
 
-export const createToken = async (user, secret) => {
+export const createTokens = async (user, secret) => {
     const token = jwt.sign(
         {
             user: _.pick(user, "id"),
@@ -82,7 +82,7 @@ export const tryLogin = async (email, password, User, SECRET) => {
         };
     }
 
-    const [token, refreshToken] = await createToken(user, SECRET);
+    const [token, refreshToken] = await createTokens(user, SECRET);
 
     return {
         ok: true,

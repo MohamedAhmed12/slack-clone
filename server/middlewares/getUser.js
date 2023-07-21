@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
-import refreshTokens from "../helpers/auth";
+import { refreshTokens } from "../helpers/auth";
+import { models } from "sequelize";
 
-const addUser = async (req, res, next) => {
+export const getUserMiddleware = (models, SECRET) => async (req, res, next) => {
     const token = req.headers["x-token"];
     if (token) {
         try {
@@ -15,6 +16,7 @@ const addUser = async (req, res, next) => {
                 res.set("x-token", newTokens.token);
                 res.set("x-refresh-token", newTokens.refreshToken);
             }
+
             req.user = newTokens.user;
         }
     }
