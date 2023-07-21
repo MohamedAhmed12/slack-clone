@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, from } from "@apollo/client";
 import { authMiddleware } from "./middlewares/auth";
-import { refreshTokenMiddleware } from './middlewares/refreshToken';
+// import { refreshTokenMiddleware } from './middlewares/refreshToken';
 import "semantic-ui-css/semantic.min.css";
 
 import Routes from "./routes";
@@ -11,10 +11,10 @@ import Routes from "./routes";
 const httpLink = createHttpLink({ uri: "http://localhost:8080/graphql" });
 
 const client = new ApolloClient({
-    link: from ([
+    link: from([
         authMiddleware,
+        // refreshTokenMiddleware,
         httpLink,
-        refreshTokenMiddleware
     ]),
     cache: new InMemoryCache(),
 });
