@@ -33,7 +33,7 @@ const startServer = async () => {
     app.use(getUserMiddleware(models, SECRET));
     app.use(
         "/graphql",
-        cors(),
+        cors('*'),
         bodyParser.json(),
         expressMiddleware(server, {
             context: ({ req }) => {
