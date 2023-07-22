@@ -6,7 +6,7 @@ export const refreshTokenMiddleware = new ApolloLink((operation, forward) => {
         const refreshToken = response.headers.get("x-refresh-token");
 
         if (token) {
-            localStorage.setItem("x-token", token);
+            localStorage.setItem("token", token);
         }
 
         if (refreshToken) {

@@ -14,21 +14,24 @@ const CreateTeam = () => {
     // eslint-disable-next-line
     const [createTeam, { data, loadding, error }] = useMutation(CREATE_TEAM_MUTATION);
     const onSubmit = async () => {
-        await createTeam({
-            variables: {
-                name,
-            },
-        });
+        try {
+            await createTeam({
+                variables: {
+                    name,
+                },
+            });
+        } catch (error) {
+            setError(error);
+            navigate("/login");
+        }
     };
 
     useEffect(() => {
         if (data) {
-            const { ok, errors, token, refreshToken } = data.createTeam;
+            const { ok, errors } = data.createTeam;
 
             if (ok) {
                 setError({});
-                localStorage.setItem("token", token);
-                localStorage.setItem("refreshToken", refreshToken);
                 navigate("/");
             } else {
                 setError(errors);
@@ -40,9 +43,7 @@ const CreateTeam = () => {
         <Container text textAlign="left">
             <Header as="h2">Create a team</Header>
             <Input placeholder="Name" {...bindName} fluid />
-            <Button onClick={onSubmit}>
-                Submit
-            </Button>
+            <Button onClick={onSubmit}>Submit</Button>
             {errors.length && (
                 <Message error header="Team Creation Failed!" list={errors.map((e) => e.message)} />
             )}
