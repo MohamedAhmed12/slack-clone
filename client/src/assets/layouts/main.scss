@@ -1,0 +1,10 @@
+@import "../variables";
+
+.main-layout {
+    height: 100vh;
+    border: none !important;
+    border-radius: 0 !important;
+    .sidebar {
+        background-color: $primary-color !important;
+    }
+}
