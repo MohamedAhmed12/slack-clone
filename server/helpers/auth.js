@@ -9,7 +9,7 @@ export const createTokens = async (user, secret) => {
         },
         secret,
         {
-            expiresIn: "1m",
+            expiresIn: "30d",
         }
     );
 

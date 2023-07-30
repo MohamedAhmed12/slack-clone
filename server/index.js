@@ -30,11 +30,11 @@ const startServer = async () => {
     
     assertDatabaseConnectionOk();
    
-    app.use(getUserMiddleware(models, SECRET));
     app.use(
         "/graphql",
         cors('*'),
         bodyParser.json(),
+        getUserMiddleware(models, SECRET),
         expressMiddleware(server, {
             context: ({ req }) => {
                 return { models, user: req.user, SECRET };

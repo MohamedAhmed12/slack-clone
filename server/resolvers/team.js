@@ -2,6 +2,11 @@ import { formatErr } from "../helpers/formatError";
 import requiresAuth from "../helpers/permissions";
 
 export default {
+    Query: {
+        listTeams: requiresAuth.createResolver(async (parent, args, { models, user }) =>
+            models.Team.findAll({ where: { owner_id: user.id } }, { raw: true })
+        ),
+    },
     Mutation: {
         createTeam: requiresAuth.createResolver(
             async (parent, args, { models: { Team }, user }) => {
