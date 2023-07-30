@@ -5,7 +5,7 @@ import _ from "lodash";
 export const createTokens = async (user, secret) => {
     const token = jwt.sign(
         {
-            user: _.pick(user, "id"),
+            user: _.pick(user, ["id", "username"]),
         },
         secret,
         {
