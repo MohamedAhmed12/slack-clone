@@ -25,4 +25,8 @@ export default {
             }
         ),
     },
+    Team: {
+        channels: ({ id }, args, { models: { Channel} }) =>
+            Channel.findAll({ where: { team_id: id } }),
+    },
 };
