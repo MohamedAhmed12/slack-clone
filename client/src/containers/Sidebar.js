@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { React } from "react";
+import { React, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Grid, Menu, Sidebar } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -7,9 +6,13 @@ import { Link } from "react-router-dom";
 import "../assets/containers/sidebar.scss";
 import { getCurrentUser } from "../helper/auth";
 import LIST_TEAMS from "../graphql/teams/queries/LIST_TEAMS";
+import AddChannelModal from "../components/AddChannelModal";
 import Channels from "../components/Channels";
 
 const SidebarContainer = ({ currentTeamId }) => {
+    const [openAddChannelModal, setOpenAddChannelModal] = useState(false);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(LIST_TEAMS, { fetchPolicy: "network-only" });
 
     if (loading) return null;
@@ -34,7 +37,6 @@ const SidebarContainer = ({ currentTeamId }) => {
                         ))}
                     </Grid.Column>
                     <Channels
-                        width={11}
                         teamName={team.name}
                         username={username}
                         channels={team.channels}
@@ -42,6 +44,11 @@ const SidebarContainer = ({ currentTeamId }) => {
                             { id: 1, name: "slackbot" },
                             { id: 2, name: "user1" },
                         ]}
+                        handleOpenAddChannelModal={() => setOpenAddChannelModal(true)}
+                    />
+                    <AddChannelModal
+                        open={openAddChannelModal}
+                        onClose={() => setOpenAddChannelModal(false)}
                     />
                 </Grid.Row>
             </Grid>
