@@ -28,11 +28,11 @@ const CreateTeam = () => {
 
     useEffect(() => {
         if (data) {
-            const { ok, errors } = data.createTeam;
+            const { ok, errors, team } = data.createTeam;
 
             if (ok) {
                 setError({});
-                navigate("/");
+                navigate(`/view-team/${team.id}`);
             } else {
                 setError(errors);
             }

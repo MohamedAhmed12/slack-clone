@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
         name: DataTypes.STRING,
         public: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: true
         },
     });
 };

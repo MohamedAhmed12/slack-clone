@@ -14,7 +14,7 @@ export default () => (
             <Route path="/" exact element={<Home />} />
             <Route path="register" exact element={<Register />} />
             <Route path="login" exact element={<Login />} />
-            <Route path="view-team" exact element={<ViewTeam />} />
+            <Route path="view-team/:teamId?/:channelId?" exact element={<ViewTeam />} />
             <Route path="/" element={<PrivateRoute />}>
                 <Route path="/create-team" exact element={<CreateTeam />} />
             </Route>
