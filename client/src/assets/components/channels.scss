@@ -1,19 +1,23 @@
 .channels {
     .header {
-        color: #fff!important;
+        color: #fff !important;
         font-size: 20px;
     }
     .item {
-        &:not(:first-child){
-            padding: 15px 0 0!important;
+        &:not(:first-child) {
+            padding: 15px 0 0 !important;
         }
-        &.header{
-            padding: 0!important;
+        &.header {
+            padding: 0 !important;
         }
-        li {
-            list-style: none;
-            &:hover {
-                background: #3e313c;
+        .channel {
+            color: inherit!important;
+            padding: 0 !important;
+            li {
+                list-style: none;
+                &:hover {
+                    background: #3e313c;
+                }
             }
         }
         .green {

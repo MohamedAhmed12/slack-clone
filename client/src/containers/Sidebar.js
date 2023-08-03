@@ -37,7 +37,7 @@ const SidebarContainer = ({ currentTeamId }) => {
                         ))}
                     </Grid.Column>
                     <Channels
-                        teamName={team.name}
+                        team={team}
                         username={username}
                         channels={team.channels}
                         users={[
@@ -47,6 +47,7 @@ const SidebarContainer = ({ currentTeamId }) => {
                         handleOpenAddChannelModal={() => setOpenAddChannelModal(true)}
                     />
                     <AddChannelModal
+                        teamId={currentTeamId}
                         open={openAddChannelModal}
                         onClose={() => setOpenAddChannelModal(false)}
                     />

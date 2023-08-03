@@ -4,23 +4,32 @@ import { Grid, Icon, Menu } from "semantic-ui-react";
 
 import "../assets/components/channels.scss";
 import { Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-const Channels = ({ teamName, username, channels, users, handleOpenAddChannelModal }) => {
+const Channels = ({ team, username, channels, users, handleOpenAddChannelModal }) => {
     const Bubble = ({ on = true }) => (on ? <span className="green">●</span> : "○");
 
     return (
         <Grid.Column className="channels" width={11}>
             <Menu.Item className="header">
-                {teamName}
+                {team.name}
                 {username}
             </Menu.Item>
             <Menu.Item>
                 <h3>
                     Channels
-                    <Button onClick={handleOpenAddChannelModal} icon="add circle" className="transparent-button" />
+                    <Button
+                        onClick={handleOpenAddChannelModal}
+                        icon="add circle"
+                        className="transparent-button"
+                    />
                 </h3>
+
                 {channels.map(({ id, name }) => (
-                    <li key={`channel-${id}`}># {name}</li>
+                        // <li>{name}</li>
+                    <Link key={`channel-${id}`} to={`/view-team/${team.id}/${id}`} className="channel">
+                        <li>{name}</li>
+                    </Link>
                 ))}
             </Menu.Item>
             <Menu.Item>
