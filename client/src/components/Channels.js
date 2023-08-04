@@ -6,7 +6,7 @@ import "../assets/components/channels.scss";
 import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const Channels = ({ team, username, channels, users, handleOpenAddChannelModal }) => {
+const Channels = ({ team, username, channels, users, onAddChannelClick, onInvitePeopleClick }) => {
     const Bubble = ({ on = true }) => (on ? <span className="green">●</span> : "○");
 
     return (
@@ -19,7 +19,7 @@ const Channels = ({ team, username, channels, users, handleOpenAddChannelModal }
                 <h3>
                     Channels
                     <Button
-                        onClick={handleOpenAddChannelModal}
+                        onClick={onAddChannelClick}
                         icon="add circle"
                         className="transparent-button"
                     />
@@ -39,6 +39,9 @@ const Channels = ({ team, username, channels, users, handleOpenAddChannelModal }
                         <Bubble /> {name}
                     </li>
                 ))}
+            </Menu.Item>
+            <Menu.Item>
+                <a href="#invite-people" onClick={onInvitePeopleClick}>+ Invite People</a>
             </Menu.Item>
         </Grid.Column>
     );

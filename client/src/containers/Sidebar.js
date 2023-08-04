@@ -7,10 +7,12 @@ import "../assets/containers/sidebar.scss";
 import { getCurrentUser } from "../helper/auth";
 import LIST_TEAMS from "../graphql/teams/queries/LIST_TEAMS";
 import AddChannelModal from "../components/AddChannelModal";
+import InvitePeopleModal from "../components/InvitePeopleModal";
 import Channels from "../components/Channels";
 
 const SidebarContainer = ({ currentTeamId }) => {
     const [openAddChannelModal, setOpenAddChannelModal] = useState(false);
+    const [openInvitePeopleModal, setOpenInvitePeopleModal] = useState(false);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(LIST_TEAMS, { fetchPolicy: "network-only" });
@@ -44,12 +46,18 @@ const SidebarContainer = ({ currentTeamId }) => {
                             { id: 1, name: "slackbot" },
                             { id: 2, name: "user1" },
                         ]}
-                        handleOpenAddChannelModal={() => setOpenAddChannelModal(true)}
+                        onAddChannelClick={() => setOpenAddChannelModal(true)}
+                        onInvitePeopleClick={() => setOpenInvitePeopleModal(true)}
                     />
                     <AddChannelModal
                         teamId={currentTeamId}
                         open={openAddChannelModal}
                         onClose={() => setOpenAddChannelModal(false)}
+                    />
+                    <InvitePeopleModal
+                        teamId={currentTeamId}
+                        open={openInvitePeopleModal}
+                        onClose={() => setOpenInvitePeopleModal(false)}
                     />
                 </Grid.Row>
             </Grid>

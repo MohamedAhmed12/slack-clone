@@ -6,6 +6,11 @@ export default `
         channels: [Channel!]!
     }
 
+    type VoidResponse {
+        ok: Boolean!
+        errors: [Error!]    
+    }
+
     type CreateTeamResponse {
         ok: Boolean!
         team: Team!
@@ -18,5 +23,6 @@ export default `
 
     type Mutation {
         createTeam(name: String!): CreateTeamResponse!
+        addMember(email: String!, team_id: Int!): VoidResponse!
     }
 `;
