@@ -31,7 +31,7 @@ const AddChannelModal = ({ teamId, open, onClose }) => {
                         },
                     },
                 },
-                refetchQueries: [LIST_TEAMS, "listTeams"],
+                refetchQueries: [LIST_TEAMS],
             });
             onClose();
             actions.setSubmitting(false);
