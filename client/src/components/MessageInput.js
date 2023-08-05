@@ -2,7 +2,7 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
 
-const MessageInput = ({channelName}) => (
+const MessageInput = ({channel}) => (
     <span>
         <div className="messages" style={{ "gridColumn": 3, "gridRow": 2 }}>
             <ul className="message-list">
@@ -14,7 +14,7 @@ const MessageInput = ({channelName}) => (
             className="send-message-wrapper"
             style={{ "gridColumn": 3, "gridRow": 3, margin: "20px" }}
         >
-            <Input fluid placeholder={`Message #${channelName}`} />
+            <Input fluid placeholder={`Message #${channel.name}`} />
         </div>
     </span>
 );

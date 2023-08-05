@@ -8,11 +8,10 @@ import AddChannelModal from "../components/AddChannelModal";
 import InvitePeopleModal from "../components/InvitePeopleModal";
 import Channels from "../components/Channels";
 
-const SidebarContainer = ({ teams, currentTeamId }) => {
+const SidebarContainer = ({ teams, team }) => {
     const [toggleAddChannelModal, setToggleAddChannelModal] = useState(false);
     const [toggleInvitePeopleModal, setToggleInvitePeopleModal] = useState(false);
 
-    const team = teams.find((team) => team.id == currentTeamId) || teams[0];
     let currentUser = getCurrentUser();
 
     const handleModalClose = (e, callBack) => {
@@ -49,12 +48,12 @@ const SidebarContainer = ({ teams, currentTeamId }) => {
                         onInvitePeopleClick={() => setToggleInvitePeopleModal(true)}
                     />
                     <AddChannelModal
-                        teamId={currentTeamId}
+                        teamId={team.id}
                         open={toggleAddChannelModal}
                         onClose={(e) => handleModalClose(e, setToggleAddChannelModal(false))}
                     />
                     <InvitePeopleModal
-                        teamId={currentTeamId}
+                        teamId={team.id}
                         open={toggleInvitePeopleModal}
                         onClose={(e) => handleModalClose(e, setToggleInvitePeopleModal(false))}
                     />
