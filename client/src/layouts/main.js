@@ -19,7 +19,6 @@ const MainLayout = ({ ChildComponent }) => {
     if (loading) return null;
 
     const teams = data.listTeams;
-
     if (!teams.length) return <Navigate to={"/create-team"} />;
 
     return (

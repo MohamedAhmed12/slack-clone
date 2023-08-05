@@ -5,6 +5,7 @@ export default gql`
         listTeams {
             id
             name
+            owner_id
             channels {
                 id
                 name

@@ -13,7 +13,7 @@ const SidebarContainer = ({ teams, currentTeamId }) => {
     const [toggleInvitePeopleModal, setToggleInvitePeopleModal] = useState(false);
 
     const team = teams.find((team) => team.id == currentTeamId) || teams[0];
-    let username = getCurrentUser().username;
+    let currentUser = getCurrentUser();
 
     const handleModalClose = (e, callBack) => {
         if (e) {
@@ -39,7 +39,7 @@ const SidebarContainer = ({ teams, currentTeamId }) => {
                     </Grid.Column>
                     <Channels
                         team={team}
-                        username={username}
+                        currentUser={currentUser}
                         channels={team.channels}
                         users={[
                             { id: 1, name: "slackbot" },
