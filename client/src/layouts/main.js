@@ -9,7 +9,7 @@ const MainLayout = ({ teams, team, ChildComponent }) => {
         <Sidebar.Pushable as={Segment} className="main-layout">
             <SidebarContainer teams={teams} team={team} />
             <Sidebar.Pusher>
-                <Segment basic>{ChildComponent} </Segment>
+                <Segment basic>{ChildComponent}</Segment>
             </Sidebar.Pusher>
         </Sidebar.Pushable>
     );

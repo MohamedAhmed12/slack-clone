@@ -6,9 +6,10 @@ import MainHeader from "../components/header/MainHeader";
 import MessageInput from "../components/MessageInput";
 import MainLayout from "../layouts/main";
 import LIST_TEAMS from "../graphql/teams/queries/LIST_TEAMS";
+import Messages from "../components/Messages";
 
 const ViewTeam = () => {
-    const { channelId, teamId } = useParams();
+    const { teamId, channelId } = useParams();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(LIST_TEAMS, { fetchPolicy: "network-only" });
 
@@ -25,10 +26,11 @@ const ViewTeam = () => {
             teams={teams}
             team={team}
             ChildComponent={
-                <div>
+                <span>
                     <MainHeader channelName={"general"} />
+                    <Messages />
                     <MessageInput channel={channel} />
-                </div>
+                </span>
             }
         />
     );

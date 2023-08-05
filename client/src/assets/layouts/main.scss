@@ -7,7 +7,25 @@
     .sidebar {
         display: flex !important;
         border: none;
-        max-width: 250px;
+        max-width: $sidebar-width;
         overflow: hidden;
+    }
+    .ui.visible.wide.left.sidebar ~ .pusher {
+        margin-left: $sidebar-width;
+        padding: 20px;
+        transform: none;
+        .segment {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .segment,
+        .segment > span {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; // Adjust the height as needed
+        }
     }
 }
