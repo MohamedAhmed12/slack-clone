@@ -11,8 +11,7 @@ const CreateTeam = () => {
     const [errors, setError] = useState({});
     const navigate = useNavigate();
 
-    // eslint-disable-next-line
-    const [createTeam, { data, loadding, error }] = useMutation(CREATE_TEAM_MUTATION);
+    const [createTeam, { data }] = useMutation(CREATE_TEAM_MUTATION);
     const onSubmit = async () => {
         try {
             await createTeam({
