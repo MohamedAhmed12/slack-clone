@@ -1,3 +1,4 @@
+import { Sequelize } from "sequelize";
 import { formatErr } from "../helpers/formatError";
 import requiresAuth from "../helpers/permissions";
 
@@ -11,12 +12,15 @@ export default {
         createTeam: requiresAuth.createResolver(
             async (parent, args, { models: { Team, Channel }, user }) => {
                 try {
-                    const team = await Team.create({ ...args, owner_id: user.id });
-                    await Channel.create({ name: "general", team_id: team.id });
+                    const res = await Team.sequelize.transaction(async () => {
+                        const team = await Team.create({ ...args, owner_id: user.id });
+                        await Channel.create({ name: "general", team_id: team.id });
+                        return team;
+                    });
 
                     return {
                         ok: true,
-                        team,
+                        res,
                     };
                 } catch (error) {
                     console.log(error);
@@ -54,7 +58,7 @@ export default {
                         };
                     }
 
-                    await team.addUsers(userToAdd,{ through: { selfGranted: false} });
+                    await team.addUsers(userToAdd, { through: { selfGranted: false } });
 
                     return {
                         ok: true,
