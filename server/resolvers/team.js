@@ -1,12 +1,17 @@
-import { Sequelize } from "sequelize";
 import { formatErr } from "../helpers/formatError";
 import requiresAuth from "../helpers/permissions";
 
 export default {
     Query: {
-        listTeams: requiresAuth.createResolver(async (parent, args, { models, user }) =>
-            models.Team.findAll({ where: { owner_id: user.id } }, { raw: true })
-        ),
+        listTeams: requiresAuth.createResolver(async (parent, args, { models: { Team }, user }) => {
+            const [results] = await Team.sequelize.query(`SELECT "Team".*
+                FROM "Teams" AS "Team"
+                LEFT JOIN "User_Team" AS "UserTeam" ON "Team"."id" = "UserTeam"."team_id"
+                WHERE "Team"."owner_id" = ${user.id} OR "UserTeam"."user_id" = ${user.id}
+            `);
+
+            return results;
+        }),
     },
     Mutation: {
         createTeam: requiresAuth.createResolver(
@@ -20,7 +25,7 @@ export default {
 
                     return {
                         ok: true,
-                        res,
+                        team: res,
                     };
                 } catch (error) {
                     console.log(error);
