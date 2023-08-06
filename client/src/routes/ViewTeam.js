@@ -26,11 +26,13 @@ const ViewTeam = () => {
             teams={teams}
             team={team}
             ChildComponent={
-                <span>
-                    <MainHeader channelName={"general"} />
-                    <Messages />
-                    <MessageInput channel={channel} />
-                </span>
+                channel && (
+                    <span>
+                        <MainHeader channelName={"general"} />
+                        <Messages channelId={channel.id}/>
+                        <MessageInput channel={channel} />
+                    </span>
+                )
             }
         />
     );

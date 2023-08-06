@@ -1,9 +1,16 @@
 export default `
+    scalar DateTime
+
     type Message {
         id: Int!
         text: String!
         user: User!
-        channel: Channel!
+        channel: Channel
+        createdAt: DateTime!
+    }
+
+    type Query {
+        listMessages(channel_id: Int!): [Message!]!
     }
 
     type Mutation {
