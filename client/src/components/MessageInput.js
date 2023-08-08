@@ -25,7 +25,6 @@ const MessageInput = ({ channel }) => {
 
     return (
         <span>
-           
             <Formik initialValues={{ message: "" }} onSubmit={handleSubmit}>
                 {({ values, handleChange, handleBlur, isSubmitting, handleSubmit }) => (
                     <div className="send-message-wrapper">

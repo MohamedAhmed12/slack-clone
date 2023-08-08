@@ -6,7 +6,7 @@ import MainHeader from "../components/header/MainHeader";
 import MessageInput from "../components/MessageInput";
 import MainLayout from "../layouts/main";
 import LIST_TEAMS from "../graphql/teams/queries/LIST_TEAMS";
-import Messages from "../components/Messages";
+import MessagesContainer from "../containers/MessagesContainer";
 
 const ViewTeam = () => {
     const { teamId, channelId } = useParams();
@@ -29,7 +29,7 @@ const ViewTeam = () => {
                 channel && (
                     <span>
                         <MainHeader channelName={"general"} />
-                        <Messages channelId={channel.id}/>
+                        <MessagesContainer channelId={channel.id}/>
                         <MessageInput channel={channel} />
                     </span>
                 )
