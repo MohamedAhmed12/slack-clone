@@ -11,7 +11,7 @@ import "semantic-ui-css/semantic.min.css";
 import Routes from "./routes";
 import { getMainDefinition } from "@apollo/client/utilities";
 
-const wsLink = new GraphQLWsLink(createClient({ url: "ws://localhost:8080/subscriptions" }));
+const wsLink = new GraphQLWsLink(createClient({ url: "ws://localhost:8080/graphql" }));
 const httpLink = createHttpLink({ uri: "http://localhost:8080/graphql" });
 const splitLink = split(
     ({ query }) => {
