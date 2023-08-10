@@ -8,8 +8,8 @@ import CREATE_MESSAGE from "../graphql/messages/mutations/CREATE_MESSAGE";
 const MessageInput = ({ channel }) => {
     const [createMessage] = useMutation(CREATE_MESSAGE);
 
-    const handleSubmit = async ({ message }, actions) => {
-        if (!message || !message.trim()) {
+    const handleSubmit = async (values, actions) => {
+        if (!values.message || !values.message.trim()) {
             actions.setSubmitting(false);
             return;
         }
@@ -17,10 +17,12 @@ const MessageInput = ({ channel }) => {
         await createMessage({
             variables: {
                 channelId: +channel.id,
-                text: message,
+                text: values.message,
             },
         });
-        actions.resetForm();
+        
+        actions.resetForm(); 
+        actions.setSubmitting(false);
     };
 
     return (
@@ -37,7 +39,7 @@ const MessageInput = ({ channel }) => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name="message"
-                            values={values.message}
+                            value={values.message}
                             fluid
                             placeholder={`Message #${channel.name}`}
                         />

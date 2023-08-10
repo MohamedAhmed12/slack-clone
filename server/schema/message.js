@@ -9,6 +9,10 @@ export default `
         createdAt: DateTime!
     }
 
+    type Subscription {
+        newMessage(channel_id: Int!): Message!
+    }
+
     type Query {
         listMessages(channel_id: Int!): [Message!]!
     }
@@ -16,4 +20,4 @@ export default `
     type Mutation {
         createMessage(channel_id: Int!, text: String!): Boolean!
     }
-`;
+`;  
