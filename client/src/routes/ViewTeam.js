@@ -1,36 +1,29 @@
-import { React } from "react";
-import { Navigate, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { React, useContext } from "react";
 
 import MainHeader from "../components/header/MainHeader";
 import MessageInput from "../components/MessageInput";
 import MainLayout from "../layouts/main";
-import LIST_TEAMS from "../graphql/teams/queries/LIST_TEAMS";
 import MessagesContainer from "../containers/MessagesContainer";
+import { CustomContext } from "../context";
+import { useQuery } from "@apollo/client";
+import LIST_MESSAGES from "../graphql/messages/queries/LIST_MESSAGES";
 
 const ViewTeam = () => {
-    const { teamId, channelId } = useParams();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { loading, error, data } = useQuery(LIST_TEAMS, { fetchPolicy: "network-only" });
-
-    if (loading) return null;
-
-    const teams = data.listTeams;
-    if (!teams.length) return <Navigate to={"/create-team"} />;
-
-    const team = teams.find((team) => team.id == teamId) || teams[0];
-    const channel = team.channels.find((channel) => channel.id == channelId) || team.channels[0];
+    const { currentChannel } = useContext(CustomContext);
+    const { loading, data } = useQuery(LIST_MESSAGES, {
+        variables: { channelId: currentChannel.id },
+    });
 
     return (
         <MainLayout
-            teams={teams}
-            team={team}
             ChildComponent={
-                channel && (
+                currentChannel && (
                     <span>
                         <MainHeader channelName={"general"} />
-                        <MessagesContainer channelId={channel.id}/>
-                        <MessageInput channel={channel} />
+                        {loading || !data ? null : (
+                            <MessagesContainer messages={data.listMessages} />
+                        )}
+                        <MessageInput channel={currentChannel} />
                     </span>
                 )
             }

@@ -1,21 +1,12 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
 import { Comment } from "semantic-ui-react";
 
 import "../assets/containers/messages-container.scss";
-import LIST_MESSAGES from "../graphql/messages/queries/LIST_MESSAGES";
 
-const MessagesContainer = ({ channelId }) => {
-    // eslint-disable-next-line
-    const { loading, error, data } = useQuery(LIST_MESSAGES, {
-        variables: { channelId },
-    });
-
-    if (loading) return null;
-
+const MessagesContainer = ({ messages }) => {
     return (
         <Comment.Group className="message-container">
-            {data.listMessages.map((message) => (
+            {messages.map((message) => (
                 <Comment key={`${message.id}-message`}>
                     <Comment.Content>
                         <Comment.Author as="a">{message.user.username}</Comment.Author>

@@ -1,15 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import reportWebVitals from "./reportWebVitals";
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, from, split } from "@apollo/client";
+import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import {
+    ApolloClient,
+    ApolloProvider,
+    InMemoryCache,
+    createHttpLink,
+    from,
+    split,
+} from "@apollo/client";
+
 import { authMiddleware } from "./middlewares/auth";
+import reportWebVitals from "./reportWebVitals";
 // import { refreshTokenMiddleware } from './middlewares/refreshToken';
 import "semantic-ui-css/semantic.min.css";
-
 import Routes from "./routes";
-import { getMainDefinition } from "@apollo/client/utilities";
+import { CustomContextProvider } from "./context";
 
 const wsLink = new GraphQLWsLink(createClient({ url: "ws://localhost:8080/graphql" }));
 const httpLink = createHttpLink({ uri: "http://localhost:8080/graphql" });
@@ -33,7 +41,9 @@ const client = new ApolloClient({
 
 const App = (
     <ApolloProvider client={client}>
-        <Routes />
+        <CustomContextProvider>
+            <Routes />
+        </CustomContextProvider>
     </ApolloProvider>
 );
 
