@@ -1,5 +1,3 @@
-import { hash } from "bcrypt";
-
 import { formatErr } from "../helpers/formatError";
 import { tryLogin } from '../helpers/auth';
 
