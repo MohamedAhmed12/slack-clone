@@ -10,6 +10,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "formik": "^2.4.3",
     "graphql": "^16.7.1",
+    "graphql-ws": "^5.14.0",
     "jwt-decode": "^3.1.2",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",

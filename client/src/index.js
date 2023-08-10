@@ -1,20 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, from } from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, from, split } from "@apollo/client";
+import { createClient } from "graphql-ws";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { authMiddleware } from "./middlewares/auth";
 // import { refreshTokenMiddleware } from './middlewares/refreshToken';
 import "semantic-ui-css/semantic.min.css";
 
 import Routes from "./routes";
+import { getMainDefinition } from "@apollo/client/utilities";
 
+const wsLink = new GraphQLWsLink(createClient({ url: "ws://localhost:8080/subscriptions" }));
 const httpLink = createHttpLink({ uri: "http://localhost:8080/graphql" });
+const splitLink = split(
+    ({ query }) => {
+        const definition = getMainDefinition(query);
+        return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+    },
+    wsLink,
+    httpLink
+);
 
 const client = new ApolloClient({
     link: from([
         authMiddleware,
         // refreshTokenMiddleware,
-        httpLink,
+        splitLink,
     ]),
     cache: new InMemoryCache(),
 });
